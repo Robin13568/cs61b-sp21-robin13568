@@ -113,12 +113,106 @@ public class Model extends Observable {
         // TODO: Modify this.board (and perhaps this.score) to account
         // for the tilt to the Side SIDE. If the board changed, set the
         // changed local variable to true.
+        board.setViewingPerspective(side);
+
+        int size = board.size();
+        for (int col = 0; col < size; col += 1) {
+            int[] t_pos = {0, 1, 2, 3};
+            int[] arr_nonnull = {0, 0, 0, 0};
+            Tile[] t_gather = {null, null, null, null};
+            int[] pos_gather = {0, 0, 0, 0};
+            int num_nonnull = 0;
+            int idx_gather = size - 1;
+
+            // gather the tiles to the top
+            for (int row = size - 1; row >= 0; row--) {
+                if (board.tile(col, row) != null) {
+                    t_gather[idx_gather] = board.tile(col, row);
+                    pos_gather[idx_gather] = row;
+                    arr_nonnull[row] = 1;
+                    num_nonnull++;
+                    idx_gather--;
+                }
+            }
+
+            if (num_nonnull == 0) {
+                continue;
+            }
+
+            // update the position of the tiles when gathering the tiles to the top
+            for (int row = size - 1; row >= 0; row--) {
+                if (board.tile(col, row) == null) {
+                    if (row -1 >=0) {
+                        for (int row1 = row - 1; row1 >= 0; row1--) {
+                            t_pos[row1] += arr_nonnull[row1];
+                        }
+                    }
+                }
+            }
+
+            if (num_nonnull == 2) {
+                columnMove2(t_gather, t_pos, pos_gather);
+            } else if (num_nonnull == 3) {
+                columnMove3(t_gather, t_pos, pos_gather);
+            } else if (num_nonnull == 4) {
+                columnMove4(t_gather, t_pos, pos_gather);
+            }
+
+            for (int row = size - 1; row >= 0; row--) {
+                if (t_pos[row] != row) {
+                    board.move(col, t_pos[row], board.tile(col, row));
+                    changed = true;
+                }
+            }
+        }
+
+        board.setViewingPerspective(Side.NORTH);
 
         checkGameOver();
         if (changed) {
             setChanged();
         }
         return changed;
+    }
+
+    private void columnMove2(Tile[] t_gather, int[] t_pos, int[] pos_gather){
+        if (t_gather[3].value() == t_gather[2].value()) {
+            t_pos[pos_gather[2]]++;
+            score += t_gather[3].value() * 2;
+        }
+    }
+
+    private void columnMove3(Tile[] t_gather, int[] t_pos, int[] pos_gather){
+        if (t_gather[3].value() == t_gather[2].value()) {
+            t_pos[pos_gather[2]]++;
+            score += t_gather[3].value() * 2;
+            t_pos[pos_gather[1]]++;
+        } else if (t_gather[2].value() == t_gather[1].value()) {
+            t_pos[pos_gather[1]]++;
+            score += t_gather[2].value() * 2;
+        }
+    }
+
+    private void columnMove4(Tile[] t_gather, int[] t_pos, int[] pos_gather){
+        if (t_gather[3].value() == t_gather[2].value()) {
+            t_pos[pos_gather[2]]++;
+            score += t_gather[3].value() * 2;
+            if (t_gather[1].value() == t_gather[0].value()) {
+                t_pos[pos_gather[1]]++;
+                t_pos[pos_gather[0]] += 2;
+                score += t_gather[1].value() * 2;
+            } else {
+                t_pos[pos_gather[1]]++;
+                t_pos[pos_gather[0]]++;
+            }
+        } else if (t_gather[2].value() == t_gather[1].value()) {
+            t_pos[pos_gather[1]]++;
+            score += t_gather[2].value() * 2;
+            t_pos[pos_gather[0]]++;
+        } else if (t_gather[1].value() == t_gather[0].value()) {
+            t_pos[pos_gather[0]]++;
+            score += t_gather[1].value() * 2;
+        }
     }
 
     /** Checks if the game is over and sets the gameOver variable
@@ -138,6 +232,14 @@ public class Model extends Observable {
      * */
     public static boolean emptySpaceExists(Board b) {
         // TODO: Fill in this function.
+        int size = b.size();
+        for (int col = 0; col < size; col += 1) {
+            for (int row = 0; row < size; row += 1) {
+                if (b.tile(col, row) == null) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -148,6 +250,15 @@ public class Model extends Observable {
      */
     public static boolean maxTileExists(Board b) {
         // TODO: Fill in this function.
+        int size = b.size();
+        for (int col = 0; col < size; col += 1) {
+            for (int row = 0; row < size; row += 1) {
+                Tile t = b.tile(col, row);
+                if ((t != null) && (t.value() == MAX_PIECE)) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -159,6 +270,31 @@ public class Model extends Observable {
      */
     public static boolean atLeastOneMoveExists(Board b) {
         // TODO: Fill in this function.
+        if (emptySpaceExists(b)) {
+            return true;
+        }
+        int size = b.size();
+        for (int col = 0; col < size; col += 1) {
+            for (int row = 0; row < size; row += 1) {
+                int t_value = b.tile(col, row).value();
+                // left
+                if ((col - 1 >= 0) && (b.tile(col - 1, row).value() == t_value)) {
+                    return true;
+                }
+                // right
+                if ((col + 1 < size) && (b.tile(col + 1, row).value() == t_value)) {
+                    return true;
+                }
+                // top
+                if ((row + 1 < size) && (b.tile(col, row + 1).value() == t_value)) {
+                    return true;
+                }
+                // down
+                if ((row - 1 >= 0) && (b.tile(col, row - 1).value() == t_value)) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
