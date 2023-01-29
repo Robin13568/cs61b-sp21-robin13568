@@ -106,6 +106,9 @@ public class LinkedListDeque<T> {
     }
 
     public boolean equals(Object o) {
-        return o instanceof LinkedListDeque;
+        if (!(o instanceof LinkedListDeque)) {
+            return false;
+        }
+        return true;
     }
 }

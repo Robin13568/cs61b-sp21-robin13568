@@ -16,6 +16,7 @@ public class ArrayDeque<T> {
     public ArrayDeque(T item) {
         items = (T[]) new Object[8];
         size = 1;
+        items[5] = item;
         nextFirst = 4;
         nextLast = 6;
     }
@@ -110,5 +111,23 @@ public class ArrayDeque<T> {
         items[nextLast] = null;
         size--;
         return x;
+    }
+
+    public T get(int index) {
+        if (index < 0 | index >=size) {
+            return null;
+        }
+        int curr = moveBackward(nextFirst);
+        for (int i = 0; i < index; i++) {
+            curr = moveBackward(curr);
+        }
+        return items[curr];
+    }
+
+    public boolean equals(Object o) {
+        if (!(o instanceof ArrayDeque)) {
+            return false;
+        }
+        return true;
     }
 }
