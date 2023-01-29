@@ -88,7 +88,7 @@ public class ArrayDeque<T> {
         if (size == 0) {
             return null;
         }
-        if (items.length >= 16 || size - 1 < items.length * 0.25) {
+        if (items.length >= 16 && size - 1 < items.length * 0.25) {
             resize(items.length / 2);
         }
         nextFirst = moveBackward(nextFirst);
@@ -102,12 +102,12 @@ public class ArrayDeque<T> {
         if (size == 0) {
             return null;
         }
-        if (items.length >= 16 || size - 1 < items.length * 0.25) {
+        if (items.length >= 16 && size - 1 < items.length * 0.25) {
             resize(items.length / 2);
         }
-        nextLast = moveBackward(nextLast);
+        nextLast = moveForward(nextLast);
         T x = items[nextLast];
-        items[nextFirst] = null;
+        items[nextLast] = null;
         size--;
         return x;
     }

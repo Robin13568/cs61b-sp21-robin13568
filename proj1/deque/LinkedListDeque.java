@@ -58,7 +58,7 @@ public class LinkedListDeque<T> {
         Node now = sentinel;
         for (int i = 0; i < size; i++) {
             now = now.next;
-            System.out.print(now);
+            System.out.print(now.item);
             System.out.print(" ");
         }
         System.out.println();
