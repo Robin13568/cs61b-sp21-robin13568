@@ -55,10 +55,10 @@ public class LinkedListDeque<T> {
     }
 
     public void printDeque() {
-        Node now = sentinel;
+        Node curr = sentinel;
         for (int i = 0; i < size; i++) {
-            now = now.next;
-            System.out.print(now.item);
+            curr = curr.next;
+            System.out.print(curr.item);
             System.out.print(" ");
         }
         System.out.println();
@@ -88,11 +88,11 @@ public class LinkedListDeque<T> {
         if (index < 0 | index >=size) {
             return null;
         }
-        Node now = sentinel;
+        Node curr = sentinel;
         for (int i = 0; i <= index; i++) {
-            now = now.next;
+            curr = curr.next;
         }
-        return now.item;
+        return curr.item;
     }
 
     public T getRecursive(int index) {
@@ -108,6 +108,19 @@ public class LinkedListDeque<T> {
     public boolean equals(Object o) {
         if (!(o instanceof LinkedListDeque)) {
             return false;
+        }
+        LinkedListDeque<?> lld1 = (LinkedListDeque<?>) o;
+        if (size != lld1.size) {
+            return false;
+        }
+        Node curr = sentinel;
+        LinkedListDeque<?>.Node curr1 = lld1.sentinel;
+        for (int i = 0; i <= size; i++) {
+            if (i > 0 && curr.item != curr1.item) {
+                return false;
+            }
+            curr = curr.next;
+            curr1 = curr1.next;
         }
         return true;
     }

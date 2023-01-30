@@ -125,8 +125,20 @@ public class ArrayDeque<T> {
     }
 
     public boolean equals(Object o) {
+
         if (!(o instanceof ArrayDeque)) {
             return false;
+        }
+        ArrayDeque<?> ad1 = (ArrayDeque<?>) o;
+        if (size != ad1.size) {
+            return false;
+        }
+        int curr = moveBackward(nextFirst);
+        for (int i = 0; i < size; i++) {
+            if (items[curr] != ad1.items[curr]) {
+                return false;
+            }
+            curr = moveBackward(nextFirst);
         }
         return true;
     }
