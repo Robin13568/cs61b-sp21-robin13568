@@ -6,7 +6,7 @@ import static org.junit.Assert.*;
 public class ArrayDequeTest {
     @Test
     public void addIsEmptySizeTest() {
-        ArrayDeque<String> ad1 = new ArrayDeque<String>();
+        ArrayDeque<String> ad1 = new ArrayDeque<>();
 
         assertTrue("A newly initialized LLDeque should be empty", ad1.isEmpty());
         ad1.addFirst("front");
@@ -57,9 +57,9 @@ public class ArrayDequeTest {
 
     @Test
     public void multipleParamTest() {
-        ArrayDeque<String>  ad1 = new ArrayDeque<String>();
-        ArrayDeque<Double>  ad2 = new ArrayDeque<Double>();
-        ArrayDeque<Boolean> ad3 = new ArrayDeque<Boolean>();
+        ArrayDeque<String>  ad1 = new ArrayDeque<>();
+        ArrayDeque<Double>  ad2 = new ArrayDeque<>();
+        ArrayDeque<Boolean> ad3 = new ArrayDeque<>();
 
         ad1.addFirst("string");
         ad2.addFirst(3.14159);
@@ -72,7 +72,7 @@ public class ArrayDequeTest {
 
     @Test
     public void emptyNullReturnTest() {
-        ArrayDeque<Integer> ad1 = new ArrayDeque<Integer>();
+        ArrayDeque<Integer> ad1 = new ArrayDeque<>();
 
         boolean passed1 = false;
         boolean passed2 = false;
@@ -82,7 +82,7 @@ public class ArrayDequeTest {
 
     @Test
     public void bigLLDequeTest() {
-        ArrayDeque<Integer> ad1 = new ArrayDeque<Integer>();
+        ArrayDeque<Integer> ad1 = new ArrayDeque<>();
         for (int i = 0; i < 1000000; i++) {
             ad1.addLast(i);
         }
@@ -94,5 +94,27 @@ public class ArrayDequeTest {
         for (double i = 999999; i > 500000; i--) {
             assertEquals("Should have the same value", i, (double) ad1.removeLast(), 0.0);
         }
+    }
+
+    @Test
+    public void equalTest() {
+        ArrayDeque<Integer> ad1 = new ArrayDeque<>();
+        ad1.addFirst(1);
+        ad1.addFirst(2);
+        ad1.addFirst(3);
+        ArrayDeque<Integer> ad2 = new ArrayDeque<>();
+        ad2.addFirst(1);
+        ad2.addFirst(2);
+        ad2.addFirst(3);
+        assertTrue("should be equal", ad1.equals(ad2));
+
+        ArrayDeque<Integer> ad3 = new ArrayDeque<>();
+        ad2.addFirst(1);
+        ad2.addFirst(2);
+        ad2.addFirst(5);
+        assertFalse("should be not equal", ad1.equals(ad3));
+
+        Integer x = null;
+        assertFalse("should be not equal", ad1.equals(x));
     }
 }

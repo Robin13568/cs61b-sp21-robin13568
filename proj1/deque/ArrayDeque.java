@@ -1,6 +1,9 @@
 package deque;
 
-public class ArrayDeque<T> implements Deque<T> {
+import java.util.Comparator;
+import java.util.Iterator;
+
+public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     private T[] items;
     private int size;
     private int nextFirst;
@@ -127,22 +130,86 @@ public class ArrayDeque<T> implements Deque<T> {
         return items[curr];
     }
 
-    public boolean equals(Object o) {
+    public Iterator<T> iterator() {
+        return new ArrayDequeIterator();
+    }
 
-        if (!(o instanceof ArrayDeque)) {
-            return false;
+    private class ArrayDequeIterator implements Iterator<T> {
+        private int pos;
+        public ArrayDequeIterator() {
+            pos = 0;
         }
-        ArrayDeque<?> ad1 = (ArrayDeque<?>) o;
-        if (size != ad1.size) {
-            return false;
+
+        public boolean hasNext() {
+            return pos < size;
         }
-        int curr = moveBackward(nextFirst);
-        for (int i = 0; i < size; i++) {
-            if (items[curr] != ad1.items[curr]) {
+
+        public T next() {
+            T returnItem = get(pos);
+            pos += 1;
+            return returnItem;
+        }
+
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o instanceof ArrayDeque ad1) {
+            if (size != ad1.size) {
                 return false;
             }
-            curr = moveBackward(nextFirst);
+            Iterator<T> i1 = this.iterator();
+            Iterator<T> i2 = this.iterator();
+            while(i1.hasNext() && i2.hasNext()) {
+                if (i1.next() != i2.next()) {
+                    return false;
+                }
+            }
+            return true;
         }
-        return true;
+        return false;
+    }
+
+    private static class IntegerComparator implements Comparator<Integer> {
+        public int compare(Integer x1, Integer x2) {
+            return x1.compareTo(x2);
+        }
+    }
+
+    public static Comparator<Integer> getIntegerComparator() {
+        return new IntegerComparator();
+    }
+
+    private static class StringComparator implements Comparator<String> {
+        public int compare(String s1, String s2) {
+            return s1.compareTo(s2);
+        }
+    }
+
+    public static Comparator<String> getStringComparator() {
+        return new StringComparator();
+    }
+
+    private static class BooleanComparator implements Comparator<Boolean> {
+        public int compare(Boolean b1, Boolean b2) {
+            return b1.compareTo(b2);
+        }
+    }
+
+    public static Comparator<Boolean> getBooleanComparator() {
+        return new BooleanComparator();
+    }
+
+    private static class DoubleComparator implements Comparator<Double> {
+        public int compare(Double x1, Double x2) {
+            return x1.compareTo(x2);
+        }
+    }
+
+    public static Comparator<Double> getDoubleComparator() {
+        return new DoubleComparator();
     }
 }

@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 public class MaxArrayDequeTest {
     @Test
     public void addIsEmptySizeTest() {
-        MaxArrayDeque<String> ad1 = new MaxArrayDeque<String>(new CompareString());
+        MaxArrayDeque<String> ad1 = new MaxArrayDeque<>(ArrayDeque.getStringComparator());
 
         assertTrue("A newly initialized LLDeque should be empty", ad1.isEmpty());
         ad1.addFirst("front");
@@ -30,7 +30,7 @@ public class MaxArrayDequeTest {
     @Test
     /** Adds an item, then removes an item, and ensures that dll is empty afterwards. */
     public void addRemoveTest() {
-        MaxArrayDeque<Integer> ad1 = new MaxArrayDeque<Integer>(new CompareInteger());
+        MaxArrayDeque<Integer> ad1 = new MaxArrayDeque<>(ArrayDeque.getIntegerComparator());
         assertTrue("lld1 should be empty upon initialization", ad1.isEmpty());
 
         ad1.addFirst(10);
@@ -42,7 +42,7 @@ public class MaxArrayDequeTest {
 
     @Test
     public void removeEmptyTest() {
-        MaxArrayDeque<Integer> ad1 = new MaxArrayDeque<>(new CompareInteger());
+        MaxArrayDeque<Integer> ad1 = new MaxArrayDeque<>(ArrayDeque.getIntegerComparator());
         ad1.addFirst(3);
 
         ad1.removeLast();
@@ -60,9 +60,9 @@ public class MaxArrayDequeTest {
 
     @Test
     public void multipleParamTest() {
-        MaxArrayDeque<String>  ad1 = new MaxArrayDeque<String>(new CompareString());
-        MaxArrayDeque<Double>  ad2 = new MaxArrayDeque<Double>(new CompareDouble());
-        MaxArrayDeque<Boolean> ad3 = new MaxArrayDeque<Boolean>(new CompareBoolean());
+        MaxArrayDeque<String>  ad1 = new MaxArrayDeque<>(ArrayDeque.getStringComparator());
+        MaxArrayDeque<Double>  ad2 = new MaxArrayDeque<>(ArrayDeque.getDoubleComparator());
+        MaxArrayDeque<Boolean> ad3 = new MaxArrayDeque<>(ArrayDeque.getBooleanComparator());
 
         ad1.addFirst("string");
         ad2.addFirst(3.14159);
@@ -75,7 +75,7 @@ public class MaxArrayDequeTest {
 
     @Test
     public void emptyNullReturnTest() {
-        MaxArrayDeque<Integer> ad1 = new MaxArrayDeque<Integer>(new CompareInteger());
+        MaxArrayDeque<Integer> ad1 = new MaxArrayDeque<>(ArrayDeque.getIntegerComparator());
 
         boolean passed1 = false;
         boolean passed2 = false;
@@ -85,7 +85,7 @@ public class MaxArrayDequeTest {
 
     @Test
     public void bigLLDequeTest() {
-        MaxArrayDeque<Integer> ad1 = new MaxArrayDeque<Integer>(new CompareInteger());
+        MaxArrayDeque<Integer> ad1 = new MaxArrayDeque<>(ArrayDeque.getIntegerComparator());
         for (int i = 0; i < 1000000; i++) {
             ad1.addLast(i);
         }
@@ -101,11 +101,11 @@ public class MaxArrayDequeTest {
 
     @Test
     public void compareTest() {
-        MaxArrayDeque<Integer> ad1 = new MaxArrayDeque<Integer>(new CompareInteger());
+        MaxArrayDeque<Integer> ad1 = new MaxArrayDeque<>(ArrayDeque.getIntegerComparator());
         ad1.addFirst(1);
         ad1.addFirst(5);
         ad1.addFirst(8);
         assertTrue("Should have the max value", ad1.max() == 8);
-        assertTrue("Should have the max value", ad1.max(new CompareInteger()) == 8);
+        assertTrue("Should have the max value", ad1.max(ArrayDeque.getIntegerComparator()) == 8);
     }
 }
