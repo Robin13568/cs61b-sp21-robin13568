@@ -25,14 +25,6 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         size = 0;
     }
 
-    public LinkedListDeque(T item) {
-        T a = (T) new Object();
-        sentinel = new Node(null, a, null);
-        sentinel.next = new Node(sentinel, item, sentinel);
-        sentinel.prev = sentinel.next;
-        size = 1;
-    }
-
     @Override
     // Adds an item of type T to the front of the deque. You can assume that item is never null.
     public void addFirst(T item) {
@@ -72,6 +64,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         }
         T rF = sentinel.next.item;
         sentinel.next = sentinel.next.next;
+        sentinel.next.prev = sentinel;
         size -= 1;
         return rF;
     }
@@ -83,7 +76,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         }
         T rL = sentinel.prev.item;
         sentinel.prev = sentinel.prev.prev;
-        size -= 1;
+        sentinel.prev.next = sentinel;
         return rL;
     }
 
@@ -113,7 +106,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         return new LinkedListDequeIterator();
     }
 
-    private class LinkedListDequeIterator implements Iterator<T>{
+    private class LinkedListDequeIterator implements Iterator<T> {
         private int pos;
         public LinkedListDequeIterator(){
             pos = 0;
@@ -146,7 +139,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         }
         Iterator<T> i1 = this.iterator();
         Iterator<T> i2 = this.iterator();
-        while(i1.hasNext() && i2.hasNext()) {
+        while (i1.hasNext() && i2.hasNext()) {
             if (i1.next() != i2.next()) {
                 return false;
             }

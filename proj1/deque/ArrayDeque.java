@@ -16,14 +16,6 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         nextLast = 5;
     }
 
-    public ArrayDeque(T item) {
-        items = (T[]) new Object[8];
-        size = 1;
-        items[5] = item;
-        nextFirst = 4;
-        nextLast = 6;
-    }
-
     private int moveForward(int index) {
         if (index == 0) {
             return items.length - 1;
@@ -169,51 +161,11 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         }
         Iterator<T> i1 = this.iterator();
         Iterator<T> i2 = this.iterator();
-        while(i1.hasNext() && i2.hasNext()) {
+        while (i1.hasNext() && i2.hasNext()) {
             if (i1.next() != i2.next()) {
                 return false;
             }
         }
         return true;
-    }
-
-    private static class IntegerComparator implements Comparator<Integer> {
-        public int compare(Integer x1, Integer x2) {
-            return x1.compareTo(x2);
-        }
-    }
-
-    public static Comparator<Integer> getIntegerComparator() {
-        return new IntegerComparator();
-    }
-
-    private static class StringComparator implements Comparator<String> {
-        public int compare(String s1, String s2) {
-            return s1.compareTo(s2);
-        }
-    }
-
-    public static Comparator<String> getStringComparator() {
-        return new StringComparator();
-    }
-
-    private static class BooleanComparator implements Comparator<Boolean> {
-        public int compare(Boolean b1, Boolean b2) {
-            return b1.compareTo(b2);
-        }
-    }
-
-    public static Comparator<Boolean> getBooleanComparator() {
-        return new BooleanComparator();
-    }
-
-    private static class DoubleComparator implements Comparator<Double> {
-        public int compare(Double x1, Double x2) {
-            return x1.compareTo(x2);
-        }
-    }
-
-    public static Comparator<Double> getDoubleComparator() {
-        return new DoubleComparator();
     }
 }
