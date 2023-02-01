@@ -24,8 +24,7 @@ public class LinkedListDequeRandomizedTest {
                 assertEquals(l1.removeLast(), l2.removeLast());
             } else if (l1.size() > 0 && operationNumber == 4) {
                 assertEquals(l1.get(l1.size() - 1), l2.getRecursive(l2.size() - 1));
-        }
-
+            }
         }
 //        l2.isEmpty();
 //        l2.printDeque();
