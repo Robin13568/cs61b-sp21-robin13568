@@ -6,7 +6,9 @@ import org.junit.Test;
 import student.StudentArrayDeque;
 
 public class TestArrayDequeEC {
-    public static void randomizedTest() {
+
+    @Test
+    public void test1() {
         ArrayDequeSolution<Integer> ad1 = new ArrayDequeSolution<>();
         StudentArrayDeque<Integer> ad2 = new StudentArrayDeque<>();
 
@@ -39,6 +41,6 @@ public class TestArrayDequeEC {
     }
 
     public static void main(String[] args) {
-        randomizedTest();
+        jh61b.junit.TestRunner.runTests(TestArrayDequeEC.class);
     }
 }
