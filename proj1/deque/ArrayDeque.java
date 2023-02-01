@@ -154,23 +154,27 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     @Override
     public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        }
         if (this == o) {
             return true;
         }
-        if (o instanceof ArrayDeque ad1) {
-            if (size != ad1.size) {
+        if (this.getClass() != o.getClass()) {
+            return false;
+        }
+        ArrayDeque<T> ad1 = (ArrayDeque<T>) o;
+        if (size != ad1.size) {
+            return false;
+        }
+        Iterator<T> i1 = this.iterator();
+        Iterator<T> i2 = this.iterator();
+        while(i1.hasNext() && i2.hasNext()) {
+            if (i1.next() != i2.next()) {
                 return false;
             }
-            Iterator<T> i1 = this.iterator();
-            Iterator<T> i2 = this.iterator();
-            while(i1.hasNext() && i2.hasNext()) {
-                if (i1.next() != i2.next()) {
-                    return false;
-                }
-            }
-            return true;
         }
-        return false;
+        return true;
     }
 
     private static class IntegerComparator implements Comparator<Integer> {
