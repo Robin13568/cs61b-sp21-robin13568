@@ -131,5 +131,16 @@ public class LinkedListDequeTest {
 
         Integer x = null;
         assertFalse("should be not equal", lld1.equals(x));
+
+        LinkedListDeque<LinkedListDeque<Integer>> lld4 = new LinkedListDeque<>();
+        lld4.addFirst(lld1);
+        lld4.addFirst(lld3);
+
+        LinkedListDeque<LinkedListDeque<Integer>> lld5 = new LinkedListDeque<>();
+        lld5.addFirst(lld2);
+        lld5.addFirst(lld3);
+
+        assertTrue("should be equal", lld4.equals(lld5));
+        assertFalse("should be not equal", lld4.equals(lld1));
     }
 }
