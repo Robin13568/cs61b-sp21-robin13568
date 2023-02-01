@@ -24,6 +24,14 @@ public class LinkedListDequeRandomizedTest {
                 assertEquals(l1.removeLast(), l2.removeLast());
             }
         }
+//        l2.isEmpty();
+//        l2.printDeque();
+//        l2.addFirst(1);
+//        l2.printDeque();
+//        l2.removeLast();
+//        l2.printDeque();
+//        l2.isEmpty();
+//        l2.printDeque();
     }
 
     public static void main(String[] args) {

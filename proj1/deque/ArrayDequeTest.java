@@ -98,23 +98,23 @@ public class ArrayDequeTest {
 
     @Test
     public void equalTest() {
-        ArrayDeque<Integer> ad1 = new ArrayDeque<>();
-        ad1.addFirst(1);
-        ad1.addFirst(2);
-        ad1.addFirst(3);
+        LinkedListDeque<Integer> lld1 = new LinkedListDeque<>();
+        lld1.addFirst(1);
+        lld1.addFirst(2);
+        lld1.addFirst(3);
         ArrayDeque<Integer> ad2 = new ArrayDeque<>();
         ad2.addFirst(1);
         ad2.addFirst(2);
         ad2.addFirst(3);
-        assertTrue("should be equal", ad1.equals(ad2));
+        assertTrue("should be equal", lld1.equals(ad2));
 
         ArrayDeque<Integer> ad3 = new ArrayDeque<>();
-        ad2.addFirst(1);
-        ad2.addFirst(2);
-        ad2.addFirst(5);
-        assertFalse("should be not equal", ad1.equals(ad3));
+        ad3.addFirst(1);
+        ad3.addFirst(2);
+        ad3.addFirst(5);
+        assertFalse("should be not equal", lld1.equals(ad3));
 
         Integer x = null;
-        assertFalse("should be not equal", ad1.equals(x));
+        assertFalse("should be not equal", lld1.equals(x));
     }
 }

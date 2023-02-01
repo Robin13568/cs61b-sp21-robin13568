@@ -1,6 +1,5 @@
 package deque;
 
-import java.util.Comparator;
 import java.util.Iterator;
 
 public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
@@ -128,7 +127,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     private class ArrayDequeIterator implements Iterator<T> {
         private int pos;
-        public ArrayDequeIterator() {
+        ArrayDequeIterator() {
             pos = 0;
         }
 
@@ -152,15 +151,24 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         if (this == o) {
             return true;
         }
-        if (this.getClass() != o.getClass()) {
+        if (!(o instanceof Deque)) {
             return false;
         }
-        ArrayDeque<T> ad1 = (ArrayDeque<T>) o;
-        if (size != ad1.size) {
+
+        if (size != ((Deque) o).size()) {
             return false;
         }
         Iterator<T> i1 = this.iterator();
-        Iterator<T> i2 = this.iterator();
+        Iterator<T> i2 = null;
+
+        if (o instanceof ArrayDeque) {
+            ArrayDeque<T> other = (ArrayDeque<T>) o;
+            i2 = other.iterator();
+        } else if (o instanceof LinkedListDeque) {
+            LinkedListDeque<T> other = (LinkedListDeque<T>) o;
+            i2 = other.iterator();
+        }
+
         while (i1.hasNext() && i2.hasNext()) {
             if (i1.next() != i2.next()) {
                 return false;
